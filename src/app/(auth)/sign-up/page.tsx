@@ -1,7 +1,7 @@
 "use client";
-import { signUp } from "@/lib/auth-client";
-import { InputGroup, FieldError, Input, Label, TextField } from "@heroui/react";
-import { Eye, EyeSlash } from "@gravity-ui/icons";
+import { signIn, signUp } from "@/lib/auth-client";
+import { InputGroup, FieldError, Input, Label, TextField, Button } from "@heroui/react";
+import { Eye, EyeSlash, LogoGithub } from "@gravity-ui/icons";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -18,6 +18,13 @@ export default function SignUpPage() {
             callbackURL: '/'
         })
         console.log(resData, error);
+    };
+
+    const handleGoogleSignUp = async () => {
+        const resData = await signIn.social({
+            provider: 'google'
+        })
+        console.log(resData);
     };
 
     return (
@@ -109,6 +116,28 @@ export default function SignUpPage() {
                     >
                         Sign Up
                     </button>
+                    <div className="flex items-center gap-3">
+                        <div className="h-px flex-1 bg-gray-300" />
+                        <span className="text-xs font-medium text-gray-500">OR</span>
+                        <div className="h-px flex-1 bg-gray-300" />
+                    </div>
+                    <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2">
+                        <Button onClick={handleGoogleSignUp}
+                            type="button"
+                            className="flex h-12 w-full min-w-0 items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-3 text-sm font-medium text-gray-800 shadow-sm transition-all duration-200 hover:border-gray-400 hover:bg-gray-50 hover:shadow-md"
+                        >
+                            <span className="text-xl font-bold text-[#4285F4]">G</span>
+                            <span>Google</span>
+                        </Button>
+
+                        <Button
+                            type="button"
+                            className="flex h-12 w-full min-w-0 items-center justify-center gap-2 rounded-lg border border-gray-700 bg-[#18181b] px-3 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:border-gray-500 hover:bg-black hover:shadow-md"
+                        >
+                            <LogoGithub />
+                            <span>GitHub</span>
+                        </Button>
+                    </div>
                 </form>
 
                 <p className="mt-6 text-center text-sm text-gray-600">

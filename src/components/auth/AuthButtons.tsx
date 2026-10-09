@@ -33,7 +33,7 @@ const AuthButtons = () => {
         try {
             await signOut();
             setIsOpen(false);
-            router.push("/signin");
+            router.push("/sign-in");
             router.refresh();
         } catch (error) {
             console.error("Sign out failed:", error);
@@ -132,14 +132,14 @@ const AuthButtons = () => {
     return (
         <div className="flex items-center gap-3">
             <Link
-                href="/signin"
+                href="/sign-in"
                 className="rounded-lg border border-green-600 px-4 py-2 text-green-700 transition hover:bg-green-50"
             >
                 সাইন ইন
             </Link>
 
             <Link
-                href="/signup"
+                href="/sign-up"
                 className="rounded-lg bg-green-600 px-4 py-2 text-white transition hover:bg-green-700"
             >
                 সাইন আপ

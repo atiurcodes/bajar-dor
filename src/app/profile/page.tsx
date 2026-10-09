@@ -168,7 +168,7 @@ const ProfilePage = () => {
                 return;
             }
 
-            router.replace("/signin");
+            router.replace("/sign-in");
             router.refresh();
         } catch {
             setSignOutError("Sign out করা যায়নি। আবার চেষ্টা করুন।");
