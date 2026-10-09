@@ -38,8 +38,14 @@ export async function getProduct(slug: string): Promise<Product> {
         }
     );
 
+    // if (!res.ok) {
+    //     throw new Error("Failed to fetch product details");
+    // }
+
     if (!res.ok) {
-        throw new Error("Failed to fetch product details");
+        throw new Error(
+            `Failed to fetch product details: ${res.status} ${res.statusText}`
+        );
     }
 
     return res.json();
@@ -50,8 +56,14 @@ export async function getCategories(): Promise<Category[]> {
         cache: "no-store",
     });
 
+    // if (!res.ok) {
+    //     throw new Error("Failed to fetch categories");
+    // }
+
     if (!res.ok) {
-        throw new Error("Failed to fetch categories");
+        throw new Error(
+            `Failed to fetch categories: ${res.status} ${res.statusText}`
+        );
     }
 
     return res.json();
