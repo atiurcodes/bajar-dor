@@ -1,13 +1,12 @@
 "use client";
-
+import { InputGroup, FieldError, Input, Label, TextField } from "@heroui/react";
+import { Eye, EyeSlash } from "@gravity-ui/icons";
 import { signIn } from "@/lib/auth-client";
 import Link from "next/link";
 import { useState } from "react";
 
 export default function SignInPage() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
+    const [isVisible, setIsVisible] = useState(false);
     const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
@@ -35,39 +34,61 @@ export default function SignInPage() {
 
                 <form onSubmit={handleOnSubmit} className="space-y-5">
                     <div>
-                        <label
-                            htmlFor="email"
-                            className="mb-2 block text-sm font-semibold text-gray-700"
-                        >
-                            ইমেইল
-                        </label>
-                        <input
-                            id="email"
+                        {/* className="w-full rounded-lg border border-gray-300 outline-none transition focus:border-green-600 focus:ring-green-100" */}
+                        <TextField
+                            isRequired
+                            name="email"
                             type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="আপনার ইমেইল লিখুন"
-                            required
-                            className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-green-600 focus:ring-2 focus:ring-green-100"
-                        />
+                            validate={(value) => {
+                                if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
+                                    return "Please enter a valid email address";
+                                }
+                                return null;
+                            }}
+                        >
+                            <Label className="mb-2 block text-sm font-semibold text-gray-700">ইমেইল</Label>
+                            <Input placeholder="আপনার ইমেইল লিখুন" />
+                            <FieldError />
+                        </TextField>
                     </div>
 
                     <div>
-                        <label
-                            htmlFor="password"
-                            className="mb-2 block text-sm font-semibold text-gray-700"
+                        <TextField
+                            isRequired
+                            minLength={8}
+                            name="password"
+                            type={isVisible ? 'text' : 'password'}
+                            validate={(value) => {
+                                if (value.length < 8) {
+                                    return "Password must be at least 8 characters";
+                                }
+                                if (!/[A-Z]/.test(value)) {
+                                    return "Password must contain at least one uppercase letter";
+                                }
+                                if (!/[0-9]/.test(value)) {
+                                    return "Password must contain at least one number";
+                                }
+                                return null;
+                            }}
                         >
-                            পাসওয়ার্ড
-                        </label>
-                        <input
-                            id="password"
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="আপনার পাসওয়ার্ড লিখুন"
-                            required
-                            className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-green-600 focus:ring-2 focus:ring-green-100"
-                        />
+                            <Label>পাসওয়ার্ড</Label>
+                            {/* <Input placeholder="কমপক্ষে ৮ অক্ষর লিখুন" /> */}
+                            <InputGroup fullWidth>
+                                <InputGroup.Input placeholder="কমপক্ষে ৮ অক্ষর লিখুন" type={isVisible ? 'text' : 'password'} />
+                                <InputGroup.Suffix>
+                                    <button className="cursor-pointer"
+                                        type="button"
+                                        onClick={() => setIsVisible(!isVisible)}
+                                    >
+                                        {
+                                            isVisible ? <Eye className="size-4 text-muted" /> : <EyeSlash className="size-4 text-muted" />
+
+                                        }
+                                    </button>
+                                </InputGroup.Suffix>
+                            </InputGroup>
+                            <FieldError />
+                        </TextField>
                     </div>
 
                     <button

@@ -1,13 +1,12 @@
 "use client";
 import { signUp } from "@/lib/auth-client";
-import { Button, Description, FieldError, Form, Input, Label, TextField } from "@heroui/react";
+import { InputGroup, FieldError, Input, Label, TextField } from "@heroui/react";
+import { Eye, EyeSlash } from "@gravity-ui/icons";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function SignUpPage() {
-    // const [name, setName] = useState("");
-    // const [email, setEmail] = useState("");
-    // const [password, setPassword] = useState("");
-
+    const [isVisible, setIsVisible] = useState(false);
     const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
@@ -36,48 +35,20 @@ export default function SignUpPage() {
 
                 <form onSubmit={handleOnSubmit} className="space-y-5">
                     <div>
-                        {/* <label
-                            htmlFor="name"
-                            className="mb-2 block text-sm font-semibold text-gray-700"
-                        >
-                            আপনার নাম
-                        </label> */}
-
-                        <TextField className="w-full rounded-lg border border-gray-300 outline-none transition focus:border-green-600 focus:ring-green-100"
+                        <TextField
                             isRequired
                             name="name"
-                            validate={(value) => {
-                                if (value.length < 3) {
-                                    return "Name must be at least 3 characters";
-                                }
-                                return null;
-                            }}
-                        >
-                            <Label className="mb-2 block text-sm font-semibold text-gray-700">আপনার নাম</Label>
-                            <Input placeholder="আপনার নাম" />
+                            type="text">
+                            <Label className="mb-2 block text-sm font-semibold text-gray-700">নাম</Label>
+                            <Input placeholder="আপনার ইমেইল লিখুন" />
                             <FieldError />
                         </TextField>
 
                     </div>
 
                     <div>
-                        {/* <label
-                            htmlFor="email"
-                            className="mb-2 block text-sm font-semibold text-gray-700"
-                        >
-                            ইমেইল
-                        </label> */}
-                        {/* <input
-                            id="email"
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="আপনার ইমেইল লিখুন"
-                            required
-                            className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-green-600 focus:ring-2 "
-                        /> */}
-
-                        <TextField className="w-full rounded-lg border border-gray-300 outline-none transition focus:border-green-600 focus:ring-green-100"
+                        {/* className="w-full rounded-lg border border-gray-300 outline-none transition focus:border-green-600 focus:ring-green-100" */}
+                        <TextField
                             isRequired
                             name="email"
                             type="email"
@@ -95,28 +66,11 @@ export default function SignUpPage() {
                     </div>
 
                     <div>
-                        {/* <label
-                            htmlFor="password"
-                            className="mb-2 block text-sm font-semibold text-gray-700"
-                        >
-                            পাসওয়ার্ড
-                        </label> */}
-                        {/* <input
-                            id="password"
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="কমপক্ষে ৮ অক্ষর লিখুন"
-                            minLength={8}
-                            required
-                            className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-green-600 focus:ring-2 focus:ring-green-100"
-                        /> */}
-
-                        <TextField className="w-full rounded-lg border border-gray-300 outline-none transition focus:border-green-600 focus:ring-green-100"
+                        <TextField
                             isRequired
                             minLength={8}
                             name="password"
-                            type="password"
+                            type={isVisible ? 'text' : 'password'}
                             validate={(value) => {
                                 if (value.length < 8) {
                                     return "Password must be at least 8 characters";
@@ -130,12 +84,25 @@ export default function SignUpPage() {
                                 return null;
                             }}
                         >
-                            <Label className="mb-2 block text-sm font-semibold text-gray-700">পাসওয়ার্ড</Label>
-                            <Input placeholder="কমপক্ষে ৮ অক্ষর লিখুন" />
+                            <Label>পাসওয়ার্ড</Label>
+                            {/* <Input placeholder="কমপক্ষে ৮ অক্ষর লিখুন" /> */}
+                            <InputGroup fullWidth>
+                                <InputGroup.Input placeholder="কমপক্ষে ৮ অক্ষর লিখুন" type={isVisible ? 'text' : 'password'} />
+                                <InputGroup.Suffix>
+                                    <button className="cursor-pointer"
+                                        type="button"
+                                        onClick={() => setIsVisible(!isVisible)}
+                                    >
+                                        {
+                                            isVisible ? <Eye className="size-4 text-muted" /> : <EyeSlash className="size-4 text-muted" />
+
+                                        }
+                                    </button>
+                                </InputGroup.Suffix>
+                            </InputGroup>
                             <FieldError />
                         </TextField>
                     </div>
-
                     <button
                         type="submit"
                         className="w-full rounded-lg bg-green-700 py-3 font-semibold text-white transition hover:bg-green-800"
