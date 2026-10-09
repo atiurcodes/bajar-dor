@@ -27,6 +27,13 @@ export default function SignUpPage() {
         console.log(resData);
     };
 
+    const handleGithubSignUp = async () => {
+        const resData = await signIn.social({
+            provider: 'github'
+        })
+        console.log(resData);
+    };
+
     return (
         <main className="flex min-h-[75vh] items-center justify-center bg-[#f7faf7] px-4 py-12">
             <div className="w-full max-w-md rounded-2xl border border-green-100 bg-white p-6 shadow-lg sm:p-8">
@@ -130,7 +137,7 @@ export default function SignUpPage() {
                             <span>Google</span>
                         </Button>
 
-                        <Button
+                        <Button onClick={handleGithubSignUp}
                             type="button"
                             className="flex h-12 w-full min-w-0 items-center justify-center gap-2 rounded-lg border border-gray-700 bg-[#18181b] px-3 text-sm font-medium text-white shadow-sm transition-all duration-200 hover:border-gray-500 hover:bg-black hover:shadow-md"
                         >
