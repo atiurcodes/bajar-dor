@@ -1,16 +1,23 @@
 "use client";
 
+import { signIn } from "@/lib/auth-client";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function SignUpPage() {
-    const [name, setName] = useState("");
+export default function SignInPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        alert("রেজিস্ট্রেশন ফিচার এখনো Better Auth-এর সঙ্গে সংযুক্ত করা হয়নি।");
+        const formData = new FormData(e.currentTarget);
+        const data = Object.fromEntries(formData.entries()) as Record<string, string>;
+        const { data: resData, error } = await signIn.email({
+            email: data.email,
+            password: data.password,
+            callbackURL: '/'
+        })
+        console.log(resData, error);
     };
 
     return (
@@ -19,32 +26,14 @@ export default function SignUpPage() {
                 <div className="mb-7 text-center">
                     <div className="mb-3 text-4xl">🛒</div>
                     <h1 className="text-3xl font-bold text-green-800">
-                        অ্যাকাউন্ট তৈরি করুন
+                        আবার স্বাগতম!
                     </h1>
                     <p className="mt-2 text-sm text-gray-500">
-                        বাজার দর-এর সঙ্গে যুক্ত হোন
+                        বাজার দর অ্যাকাউন্টে লগইন করুন
                     </p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-5">
-                    <div>
-                        <label
-                            htmlFor="name"
-                            className="mb-2 block text-sm font-semibold text-gray-700"
-                        >
-                            আপনার নাম
-                        </label>
-                        <input
-                            id="name"
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            placeholder="আপনার নাম লিখুন"
-                            required
-                            className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-green-600 focus:ring-2 focus:ring-green-100"
-                        />
-                    </div>
-
+                <form onSubmit={handleOnSubmit} className="space-y-5">
                     <div>
                         <label
                             htmlFor="email"
@@ -75,8 +64,7 @@ export default function SignUpPage() {
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            placeholder="কমপক্ষে ৮ অক্ষর লিখুন"
-                            minLength={8}
+                            placeholder="আপনার পাসওয়ার্ড লিখুন"
                             required
                             className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-green-600 focus:ring-2 focus:ring-green-100"
                         />
@@ -86,17 +74,17 @@ export default function SignUpPage() {
                         type="submit"
                         className="w-full rounded-lg bg-green-700 py-3 font-semibold text-white transition hover:bg-green-800"
                     >
-                        Sign Up
+                        Sign In
                     </button>
                 </form>
 
                 <p className="mt-6 text-center text-sm text-gray-600">
-                    আগে থেকেই অ্যাকাউন্ট আছে?{" "}
+                    অ্যাকাউন্ট নেই?{" "}
                     <Link
-                        href="/signin"
+                        href="/signup"
                         className="font-semibold text-green-700 hover:underline"
                     >
-                        Sign In করুন
+                        Sign Up করুন
                     </Link>
                 </p>
 

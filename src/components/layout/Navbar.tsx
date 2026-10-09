@@ -1,6 +1,8 @@
+
 import Link from "next/link";
 import CategoryNav from "./CategoryNav";
 import PriceTicker from "./PriceTicker";
+
 
 const Navbar = () => {
     const date = new Date().toLocaleDateString("bn-BD", {
