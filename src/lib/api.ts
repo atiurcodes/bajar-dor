@@ -1,62 +1,87 @@
 import type { Category, Product } from "@/types/product";
 
 const BASE_URL =
-  "https://api.api-store.workers.dev/api/bazardor";
+    "https://api.abcz.workers.dev/api/bazardor";
 
 export async function getProducts(): Promise<Product[]> {
-  const response = await fetch(`${BASE_URL}/products`);
+    const res = await fetch(`${BASE_URL}/products`, {
+        cache: "no-store",
+    });
 
-  if (!response.ok) {
-    throw new Error("Products fetch failed");
-  }
+    if (!res.ok) {
+        throw new Error("Failed to fetch products");
+    }
 
-  return response.json();
+    return res.json();
 }
 
-export async function getProduct(
-  id: string
-): Promise<Product> {
-  const response = await fetch(`${BASE_URL}/products/${id}`);
+export async function getProduct(slug: string): Promise<Product> {
+    const products = await getProducts();
 
-  if (!response.ok) {
-    throw new Error("Product fetch failed");
-  }
+    const product = products.find(
+        (item) => item.slug === slug
+    );
 
-  return response.json();
-}
+    if (!product) {
+        throw new Error("Product not found");
+    }
 
-export async function getProductsByCategory(
-  category: string
-): Promise<Product[]> {
-  const response = await fetch(
-    `${BASE_URL}/products?category=${category}`
-  );
+    const res = await fetch(
+        `${BASE_URL}/products/${product.id}`,
+        {
+            cache: "no-store",
+        }
+    );
 
-  if (!response.ok) {
-    throw new Error("Category products fetch failed");
-  }
+    if (!res.ok) {
+        throw new Error("Failed to fetch product details");
+    }
 
-  return response.json();
+    return res.json();
 }
 
 export async function getCategories(): Promise<Category[]> {
-  const response = await fetch(`${BASE_URL}/categories`);
+    const res = await fetch(`${BASE_URL}/categories`, {
+        cache: "no-store",
+    });
 
-  if (!response.ok) {
-    throw new Error("Categories fetch failed");
-  }
+    if (!res.ok) {
+        throw new Error("Failed to fetch categories");
+    }
 
-  return response.json();
+    return res.json();
 }
 
 export async function getCategory(
-  slug: string
-): Promise<Category> {
-  const response = await fetch(`${BASE_URL}/categories/${slug}`);
+    slug: string
+): Promise<Category | null> {
+    const res = await fetch(
+        `${BASE_URL}/categories/${slug}`,
+        {
+            cache: "no-store",
+        }
+    );
 
-  if (!response.ok) {
-    throw new Error("Category fetch failed");
-  }
+    if (!res.ok) {
+        return null;
+    }
 
-  return response.json();
+    return res.json();
+}
+
+export async function getProductsByCategory(
+    category: string
+): Promise<Product[]> {
+    const res = await fetch(
+        `${BASE_URL}/products?category=${category}`,
+        {
+            cache: "no-store",
+        }
+    );
+
+    if (!res.ok) {
+        throw new Error("Failed to fetch category products");
+    }
+
+    return res.json();
 }

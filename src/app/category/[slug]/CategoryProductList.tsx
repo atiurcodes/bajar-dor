@@ -21,14 +21,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
             href={`/product/${product.slug}`}
             className="group block rounded-2xl border border-green-100 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
         >
-            {/* Image */}
             <div className="flex h-40 items-center justify-center rounded-xl bg-[#f0f8f1]">
                 <span className="text-7xl transition group-hover:scale-110">
                     {product.image}
                 </span>
             </div>
 
-            {/* Product Info */}
             <div className="mt-5">
                 <div className="flex items-start justify-between gap-3">
                     <div>
@@ -37,7 +35,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
                         </h3>
 
                         <p className="mt-1 text-sm text-gray-500">
-                            {unitText[product.unit] || `প্রতি ${product.unit}`}
+                            {unitText[product.unit] ||
+                                `প্রতি ${product.unit}`}
                         </p>
                     </div>
 
@@ -46,7 +45,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
                     </span>
                 </div>
 
-                {/* Price */}
                 <div className="mt-5 flex items-end justify-between gap-3">
                     <div>
                         <p className="text-xs text-gray-500">
