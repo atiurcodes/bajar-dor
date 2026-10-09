@@ -1,17 +1,22 @@
 import type { Category, Product } from "@/types/product";
 
 const BASE_URL =
-    "https://api.abcz.workers.dev/api/bazardor";
+    // "https://api.abcz.workers.dev/api/bazardor";
+    "https://api.api-store.workers.dev/api/bazardor";
 
 export async function getProducts(): Promise<Product[]> {
     const res = await fetch(`${BASE_URL}/products`, {
         cache: "no-store",
     });
 
+    // if (!res.ok) {
+    //     throw new Error("Failed to fetch products");
+    // }
     if (!res.ok) {
-        throw new Error("Failed to fetch products");
+        throw new Error(
+            `Failed to fetch products: ${res.status} ${res.statusText}`
+        );
     }
-
     return res.json();
 }
 
