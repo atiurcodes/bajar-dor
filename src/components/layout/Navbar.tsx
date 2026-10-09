@@ -2,7 +2,7 @@
 import Link from "next/link";
 import CategoryNav from "./CategoryNav";
 import PriceTicker from "./PriceTicker";
-
+import AuthButtons from "../auth/AuthButtons";
 
 const Navbar = () => {
     const date = new Date().toLocaleDateString("bn-BD", {
@@ -30,27 +30,12 @@ const Navbar = () => {
                         </div>
                     </Link>
 
-                    {/* Auth Buttons */}
-                    <div className="flex items-center gap-3">
-                        <Link
-                            href="/signin"
-                            className="rounded-lg px-4 py-2 text-sm font-semibold text-gray-700 transition hover:bg-green-50 hover:text-green-700"
-                        >
-                            সাইন ইন
-                        </Link>
-
-                        <Link
-                            href="/signup"
-                            className="rounded-lg bg-green-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-green-700"
-                        >
-                            সাইন আপ
-                        </Link>
-                    </div>
+                    {/* Authentication UI */}
+                    <AuthButtons />
                 </div>
             </div>
 
             <CategoryNav />
-
             <PriceTicker />
         </header>
     );
