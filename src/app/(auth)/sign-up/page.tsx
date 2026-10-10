@@ -4,6 +4,7 @@ import { InputGroup, FieldError, Input, Label, TextField, Button } from "@heroui
 import { Eye, EyeSlash, LogoGithub } from "@gravity-ui/icons";
 import Link from "next/link";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function SignUpPage() {
     const [isVisible, setIsVisible] = useState(false);
@@ -11,27 +12,61 @@ export default function SignUpPage() {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const data = Object.fromEntries(formData.entries()) as Record<string, string>;
-        const { data: resData, error } = await signUp.email({
-            name: data.name,
-            email: data.email,
-            password: data.password,
-            callbackURL: '/'
-        })
-        console.log(resData, error);
+        try {
+            const { error } = await signUp.email({
+                name: data.name,
+                email: data.email,
+                password: data.password,
+                callbackURL: '/'
+            })
+            if (error) {
+                toast.error(error.message || "Sign up failed!");
+                return;
+            }
+
+            toast.success("Account created successfully!");
+        }
+        catch {
+            toast.error("Something went wrong. Please try again.");
+        }
     };
 
     const handleGoogleSignUp = async () => {
-        const resData = await signIn.social({
-            provider: 'google'
-        })
-        console.log(resData);
+        sessionStorage.setItem("social-signup-pending", "google");
+
+        try {
+            const { error } = await signIn.social({
+                provider: "google",
+                callbackURL: "/",
+            });
+
+            if (error) {
+                sessionStorage.removeItem("social-signup-pending");
+                toast.error(error.message || "Google sign up failed!");
+            }
+        } catch {
+            sessionStorage.removeItem("social-signup-pending");
+            toast.error("Google sign up failed!");
+        }
     };
 
     const handleGithubSignUp = async () => {
-        const resData = await signIn.social({
-            provider: 'github'
-        })
-        console.log(resData);
+        sessionStorage.setItem("social-signup-pending", "github");
+
+        try {
+            const { error } = await signIn.social({
+                provider: "github",
+                callbackURL: "/",
+            });
+
+            if (error) {
+                sessionStorage.removeItem("social-signup-pending");
+                toast.error(error.message || "GitHub sign up failed!");
+            }
+        } catch {
+            sessionStorage.removeItem("social-signup-pending");
+            toast.error("GitHub sign up failed!");
+        }
     };
 
     return (
@@ -54,7 +89,7 @@ export default function SignUpPage() {
                             name="name"
                             type="text">
                             <Label className="mb-2 block text-sm font-semibold text-gray-700">নাম</Label>
-                            <Input placeholder="আপনার ইমেইল লিখুন" />
+                            <Input placeholder="আপনার নাম লিখুন" />
                             <FieldError />
                         </TextField>
 
@@ -150,7 +185,7 @@ export default function SignUpPage() {
                 <p className="mt-6 text-center text-sm text-gray-600">
                     আগে থেকেই অ্যাকাউন্ট আছে?{" "}
                     <Link
-                        href="/signin"
+                        href="/sign-in"
                         className="font-semibold text-green-700 hover:underline"
                     >
                         Sign In করুন

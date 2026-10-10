@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import {
     signOut,
     updateUser,
@@ -15,6 +16,7 @@ import {
     CheckCircle2,
     AlertCircle,
 } from "lucide-react";
+import Image from "next/image";
 
 type ProfileUser = {
     id: string;
@@ -23,6 +25,7 @@ type ProfileUser = {
     image?: string | null;
 };
 
+// Profile name update form
 const ProfileForm = ({ user }: { user: ProfileUser }) => {
     const [name, setName] = useState(user.name ?? "");
     const [isUpdating, setIsUpdating] = useState(false);
@@ -39,12 +42,14 @@ const ProfileForm = ({ user }: { user: ProfileUser }) => {
         if (!trimmedName) {
             setErrorMessage("আপনার নাম লিখুন।");
             setMessage("");
+            toast.error("আপনার নাম লিখুন।");
             return;
         }
 
         if (trimmedName === user.name) {
             setErrorMessage("আপনি কোনো পরিবর্তন করেননি।");
             setMessage("");
+            toast.error("আপনি কোনো পরিবর্তন করেননি।");
             return;
         }
 
@@ -58,15 +63,26 @@ const ProfileForm = ({ user }: { user: ProfileUser }) => {
             });
 
             if (error) {
-                setErrorMessage(
-                    error.message || "নাম আপডেট করা যায়নি। আবার চেষ্টা করুন।"
-                );
+                const errorText =
+                    error.message ||
+                    "নাম আপডেট করা যায়নি। আবার চেষ্টা করুন।";
+
+                setErrorMessage(errorText);
+                toast.error(errorText);
                 return;
             }
 
+            setName(trimmedName);
             setMessage("আপনার নাম সফলভাবে আপডেট হয়েছে।");
-        } catch {
-            setErrorMessage("একটি সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+            toast.success("নাম সফলভাবে আপডেট হয়েছে!");
+        } catch (error) {
+            const errorText =
+                error instanceof Error
+                    ? error.message
+                    : "নাম আপডেট করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।";
+
+            setErrorMessage(errorText);
+            toast.error(errorText);
         } finally {
             setIsUpdating(false);
         }
@@ -149,9 +165,11 @@ const ProfileForm = ({ user }: { user: ProfileUser }) => {
     );
 };
 
+// Main profile page
 const ProfilePage = () => {
     const { data: session, isPending } = useSession();
     const router = useRouter();
+
     const [isSigningOut, setIsSigningOut] = useState(false);
     const [signOutError, setSignOutError] = useState("");
 
@@ -163,15 +181,25 @@ const ProfilePage = () => {
             const { error } = await signOut();
 
             if (error) {
-                setSignOutError(error.message || "Sign out করা যায়নি।");
-                setIsSigningOut(false);
+                const errorText =
+                    error.message || "Sign out করা যায়নি!";
+
+                setSignOutError(errorText);
+                toast.error(errorText);
                 return;
             }
 
+            toast.success("সফলভাবে Sign out হয়েছে!");
             router.replace("/sign-in");
-            router.refresh();
-        } catch {
-            setSignOutError("Sign out করা যায়নি। আবার চেষ্টা করুন।");
+        } catch (error) {
+            const errorText =
+                error instanceof Error
+                    ? error.message
+                    : "Sign out করতে সমস্যা হয়েছে!";
+
+            setSignOutError(errorText);
+            toast.error(errorText);
+        } finally {
             setIsSigningOut(false);
         }
     };
@@ -195,7 +223,7 @@ const ProfilePage = () => {
 
                 <button
                     type="button"
-                    onClick={() => router.push("/signin")}
+                    onClick={() => router.push("/sign-in")}
                     className="mt-5 rounded-lg bg-green-600 px-5 py-2.5 font-medium text-white transition hover:bg-green-700"
                 >
                     সাইন ইন
@@ -205,7 +233,8 @@ const ProfilePage = () => {
     }
 
     const user = session.user;
-    const firstLetter = user.name?.trim().charAt(0).toUpperCase() || "U";
+    const firstLetter =
+        user.name?.trim().charAt(0).toUpperCase() || "U";
 
     return (
         <main className="min-h-screen bg-gray-50 px-4 py-10 sm:px-6">
@@ -219,14 +248,16 @@ const ProfilePage = () => {
                     </p>
                 </div>
 
-                {/* Profile Overview */}
+                {/* Profile overview */}
                 <section className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm sm:p-7">
                     <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                         <div className="flex min-w-0 items-center gap-4">
                             {user.image ? (
-                                <img
+                                <Image
                                     src={user.image}
                                     alt={`${user.name} profile`}
+                                    width={64}
+                                    height={64}
                                     className="h-16 w-16 shrink-0 rounded-full border border-gray-100 object-cover"
                                 />
                             ) : (
@@ -239,6 +270,7 @@ const ProfilePage = () => {
                                 <h2 className="truncate text-xl font-bold text-gray-900">
                                     {user.name}
                                 </h2>
+
                                 <p className="mt-1 flex items-center gap-2 break-all text-sm text-gray-500">
                                     <Mail className="h-4 w-4 shrink-0" />
                                     {user.email}
@@ -257,19 +289,33 @@ const ProfilePage = () => {
                             ) : (
                                 <LogOut className="h-4 w-4" />
                             )}
-                            {isSigningOut ? "সাইন আউট হচ্ছে..." : "Sign Out"}
+
+                            {isSigningOut
+                                ? "সাইন আউট হচ্ছে..."
+                                : "Sign Out"}
                         </button>
                     </div>
 
                     {signOutError && (
-                        <p role="alert" className="mt-4 text-sm text-red-600">
+                        <p
+                            role="alert"
+                            className="mt-4 text-sm text-red-600"
+                        >
                             {signOutError}
                         </p>
                     )}
                 </section>
 
-                {/* Separate form component, initialized from loaded session */}
-                <ProfileForm key={user.id} user={user} />
+                {/* Profile update form */}
+                <ProfileForm
+                    key={user.id}
+                    user={{
+                        id: user.id,
+                        name: user.name ?? "",
+                        email: user.email,
+                        image: user.image,
+                    }}
+                />
             </div>
         </main>
     );

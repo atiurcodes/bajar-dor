@@ -1,4 +1,3 @@
-
 import { notFound } from "next/navigation";
 import { getProduct } from "@/lib/api";
 import ProductSummary from "@/components/product/ProductSummary";

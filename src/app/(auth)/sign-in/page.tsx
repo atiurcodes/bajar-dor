@@ -4,6 +4,7 @@ import { Eye, EyeSlash } from "@gravity-ui/icons";
 import { signIn } from "@/lib/auth-client";
 import Link from "next/link";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function SignInPage() {
     const [isVisible, setIsVisible] = useState(false);
@@ -11,12 +12,23 @@ export default function SignInPage() {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const data = Object.fromEntries(formData.entries()) as Record<string, string>;
-        const { data: resData, error } = await signIn.email({
-            email: data.email,
-            password: data.password,
-            callbackURL: '/'
-        })
-        console.log(resData, error);
+        try {
+            const { error } = await signIn.email({
+                email: data.email,
+                password: data.password,
+                callbackURL: '/'
+            })
+            if (error) {
+                toast.error(error.message || "Login failed!");
+                return;
+            }
+
+            toast.success("Login successful!");
+        }
+        catch {
+            toast.error("Something went wrong!");
+        }
+
     };
 
     return (
@@ -55,19 +67,13 @@ export default function SignInPage() {
                     <div>
                         <TextField
                             isRequired
-                            minLength={8}
                             name="password"
-                            type={isVisible ? 'text' : 'password'}
+                            type={isVisible ? "text" : "password"}
                             validate={(value) => {
-                                if (value.length < 8) {
-                                    return "Password must be at least 8 characters";
+                                if (!value) {
+                                    return "Please enter your password";
                                 }
-                                if (!/[A-Z]/.test(value)) {
-                                    return "Password must contain at least one uppercase letter";
-                                }
-                                if (!/[0-9]/.test(value)) {
-                                    return "Password must contain at least one number";
-                                }
+
                                 return null;
                             }}
                         >
@@ -102,7 +108,7 @@ export default function SignInPage() {
                 <p className="mt-6 text-center text-sm text-gray-600">
                     অ্যাকাউন্ট নেই?{" "}
                     <Link
-                        href="/signup"
+                        href="/sign-up"
                         className="font-semibold text-green-700 hover:underline"
                     >
                         Sign Up করুন

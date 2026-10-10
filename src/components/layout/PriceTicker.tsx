@@ -1,7 +1,23 @@
 import { getProducts } from "@/lib/api";
+import type { Product } from "@/types/product";
 
 const PriceTicker = async () => {
-    const products = await getProducts();
+    let products: Product[] = [];
+    try {
+        products = await getProducts();
+    } catch (error) {
+        console.error("Price ticker failed to load:", error);
+
+        return (
+            <div className="border-y border-green-100 bg-[#f0f8f1] px-4 py-3 text-center text-sm text-gray-600">
+                আপাতত বাজারদরের তথ্য পাওয়া যাচ্ছে না।
+            </div>
+        );
+    }
+
+    if (products.length === 0) {
+        return null;
+    }
 
     return (
         <div className="overflow-hidden border-y border-green-100 bg-[#f0f8f1]">
@@ -15,9 +31,7 @@ const PriceTicker = async () => {
                             key={`${product.id}-${index}`}
                             className="flex shrink-0 items-center gap-2 border-r border-green-200 px-5 py-3 text-sm"
                         >
-                            <span className="text-lg">
-                                {product.image}
-                            </span>
+                            <span className="text-lg">{product.image}</span>
 
                             <span className="font-semibold text-gray-800">
                                 {product.nameBn}
@@ -53,5 +67,4 @@ const PriceTicker = async () => {
         </div>
     );
 };
-
 export default PriceTicker;

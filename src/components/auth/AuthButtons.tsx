@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from "@/lib/auth-client";
 import { UserRound } from "lucide-react";
+import toast from "react-hot-toast";
 
 const AuthButtons = () => {
     const { data: session, isPending } = useSession();
@@ -31,14 +32,27 @@ const AuthButtons = () => {
 
     const handleSignOut = async () => {
         try {
-            await signOut();
+            const { error } = await signOut();
+
+            if (error) {
+                toast.error(error.message || "Sign out করা যায়নি!");
+                return;
+            }
+
             setIsOpen(false);
-            router.push("/sign-in");
-            router.refresh();
+            toast.success("সফলভাবে Sign out হয়েছে!");
+            router.replace("/sign-in");
         } catch (error) {
+            const errorText =
+                error instanceof Error
+                    ? error.message
+                    : "Sign out করতে সমস্যা হয়েছে!";
+
+            toast.error(errorText);
             console.error("Sign out failed:", error);
         }
     };
+
 
     if (isPending) {
         return (
