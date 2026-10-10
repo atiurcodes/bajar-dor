@@ -21,29 +21,31 @@ const ProductCard = ({ product }: ProductCardProps) => {
             href={`/product/${product.slug}`}
             className="group block rounded-2xl border border-green-100 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
         >
-            {/* Image */}
-            <div className="flex h-40 items-center justify-center rounded-xl bg-[#f0f8f1]">
-                <span className="text-7xl transition group-hover:scale-110">
-                    {product.image}
-                </span>
-            </div>
-
             {/* Product Info */}
-            <div className="mt-5">
-                <div className="flex items-start justify-between gap-3">
-                    <div>
-                        <h3 className="text-lg font-bold text-gray-900">
-                            {product.nameBn}
-                        </h3>
+            <div className="">
+                <div className="flex justify-between gap-3">
+                    <div className="flex item-center gap-2">
+                        <div className="p-4 rounded-2xl bg-gray-100">
+                            <span className="text-3xl">
+                                {product.image}
+                            </span>
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-bold text-gray-900">
+                                {product.nameBn}
+                            </h3>
 
-                        <p className="mt-1 text-sm text-gray-500">
-                            {unitText[product.unit] || `প্রতি ${product.unit}`}
-                        </p>
+                            <p className="mt-1 text-sm text-gray-500">
+                                {unitText[product.unit] || `প্রতি ${product.unit}`}
+                            </p>
+                        </div>
+
                     </div>
-
-                    <span className="shrink-0 rounded-full bg-green-50 px-2.5 py-1 text-xs font-medium text-green-700">
-                        {product.categoryIcon} {product.categoryNameBn}
-                    </span>
+                    <div>
+                        <span className="shrink-0 rounded-2xl bg-green-50 px-2.5 py-1 text-xs font-medium text-green-700">
+                            {product.categoryIcon} {product.categoryNameBn}
+                        </span>
+                    </div>
                 </div>
 
                 {/* Price */}
@@ -59,14 +61,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
                     </div>
 
                     <span
-                        className={
-                            isUp
-                                ? "rounded-full bg-green-100 px-3 py-1.5 text-sm font-bold text-green-700"
-                                : isDown
-                                    ? "rounded-full bg-red-100 px-3 py-1.5 text-sm font-bold text-red-600"
-                                    : "rounded-full bg-gray-100 px-3 py-1.5 text-sm font-bold text-gray-500"
-                        }
-                    >
+                        className={isUp ? "rounded-full bg-gray-100 px-3 py-1.5 text-sm font-bold text-red-500"
+                            : isDown ? "rounded-full bg-gray-100 px-3 py-1.5 text-sm font-bold text-green-500"
+                                : "rounded-full bg-gray-100 px-3 py-1.5 text-sm font-bold text-gray-500"
+                        }>
                         {isUp && "▲"}
                         {isDown && "▼"}
                         {!isUp && !isDown && "—"}{" "}
@@ -78,7 +76,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
                     </span>
                 </div>
             </div>
-        </Link>
+        </Link >
     );
 };
 

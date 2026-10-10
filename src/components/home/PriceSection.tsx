@@ -17,11 +17,11 @@ const PriceSection = async () => {
     return (
         <>
             {/* Today's Rising Prices */}
-            <section className="bg-[#f7faf7] py-14 sm:py-16">
-                <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <section className="container mx-auto px-4">
+                <div className="">
                     <div className="mb-8">
                         <div className="flex items-center gap-2">
-                            <span className="text-2xl">▲</span>
+                            <span className="text-2xl text-red-500">▲</span>
 
                             <h2 className="text-2xl font-extrabold text-gray-900 sm:text-3xl">
                                 আজ দাম বেড়েছে
@@ -29,7 +29,7 @@ const PriceSection = async () => {
                         </div>
 
                         <p className="mt-2 text-gray-600">
-                            আজ যেসব পণ্যের দাম তুলনামূলকভাবে বেড়েছে।
+                            আজ যেসব পণ্যের দাম তুলনামূলকভাবে বেড়েছে-
                         </p>
                     </div>
 
@@ -51,11 +51,11 @@ const PriceSection = async () => {
             </section>
 
             {/* Today's Falling Prices */}
-            <section className="bg-white py-14 sm:py-16">
-                <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <section className="container mx-auto px-4">
+                <div className="">
                     <div className="mb-8">
                         <div className="flex items-center gap-2">
-                            <span className="text-2xl text-red-500">▼</span>
+                            <span className="text-2xl text-green-500">▼</span>
 
                             <h2 className="text-2xl font-extrabold text-gray-900 sm:text-3xl">
                                 আজ দাম কমেছে
@@ -85,11 +85,9 @@ const PriceSection = async () => {
             </section>
 
             {/* All Products */}
-            <section
-                id="সব-পণ্য"
-                className="bg-[#f7faf7] py-14 sm:py-16"
+            <section id="সব-পণ্য" className="container mx-auto px-4"
             >
-                <div className="mx-auto max-w-6xl px-4 sm:px-6">
+                <div className="">
                     <div className="mb-8">
                         <h2 className="text-2xl font-extrabold text-gray-900 sm:text-3xl">
                             সব পণ্য

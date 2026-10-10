@@ -38,7 +38,7 @@ export default async function CategoryPage({
                             </h1>
 
                             <p className="mt-2 text-sm text-gray-500">
-                                এই ক্যাটাগরির পণ্যের আজকের বাজারদর
+                                {products.length.toLocaleString("bn-BD")}টি পণ্যের আজকের বাজারদর
                             </p>
                         </div>
                     </div>

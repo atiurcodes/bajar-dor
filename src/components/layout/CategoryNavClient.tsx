@@ -14,9 +14,9 @@ const CategoryNavClient = ({
     const pathname = usePathname();
 
     return (
-        <nav className="border-t border-green-100 bg-white">
-            <div className="mx-auto max-w-6xl px-4 sm:px-6">
-                <div className="flex items-center justify-center gap-2 overflow-x-auto py-3">
+        <nav className="">
+            <div className="container mx-auto px-4">
+                <div className="flex items-center gap-2 overflow-x-auto">
                     {/* All Products */}
                     <Link
                         href="/"

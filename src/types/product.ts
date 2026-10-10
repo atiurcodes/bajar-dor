@@ -27,3 +27,12 @@ export interface Category {
     nameBn: string;
     icon: string;
 }
+
+export interface Product {
+    markets: {
+        market: string;
+        division: string;
+        min: number;
+        max: number;
+    }[];
+}
