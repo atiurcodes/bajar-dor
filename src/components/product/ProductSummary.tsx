@@ -69,10 +69,10 @@ const MarketPriceTable = ({ product }: MarketPriceTableProps) => {
 
                         <p
                             className={`text-xs leading-5 sm:text-sm ${isUp
-                                    ? "text-red-600"
-                                    : isDown
-                                        ? "text-green-700"
-                                        : "text-gray-600"
+                                ? "text-red-600"
+                                : isDown
+                                    ? "text-green-700"
+                                    : "text-gray-600"
                                 }`}
                         >
                             {isUp
@@ -100,10 +100,10 @@ const MarketPriceTable = ({ product }: MarketPriceTableProps) => {
 
                     <div
                         className={`mt-1 flex items-center gap-1 text-xs font-bold ${isUp
-                                ? "text-red-600"
-                                : isDown
-                                    ? "text-green-700"
-                                    : "text-gray-500"
+                            ? "text-red-600"
+                            : isDown
+                                ? "text-green-700"
+                                : "text-gray-500"
                             }`}
                     >
                         {isUp ? (
@@ -256,10 +256,6 @@ const MarketPriceTable = ({ product }: MarketPriceTableProps) => {
                         </tbody>
                     </table>
                 </div>
-
-                <p className="mt-3 text-xs leading-5 text-gray-500">
-                    * গড় দাম = (সর্বনিম্ন দাম + সর্বোচ্চ দাম) ÷ ২।
-                </p>
             </div>
         </section>
     );
