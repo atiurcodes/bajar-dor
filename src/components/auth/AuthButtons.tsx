@@ -1,9 +1,10 @@
 "use client";
+
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signOut, useSession } from "@/lib/auth-client";
-import { UserRound } from "lucide-react";
+import { UserRound, LogOut, ChevronDown } from "lucide-react";
 import toast from "react-hot-toast";
 
 const AuthButtons = () => {
@@ -23,10 +24,18 @@ const AuthButtons = () => {
             }
         };
 
+        const handleEscape = (event: KeyboardEvent) => {
+            if (event.key === "Escape") {
+                setIsOpen(false);
+            }
+        };
+
         document.addEventListener("mousedown", handleClickOutside);
+        document.addEventListener("keydown", handleEscape);
 
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
+            document.removeEventListener("keydown", handleEscape);
         };
     }, []);
 
@@ -53,66 +62,62 @@ const AuthButtons = () => {
         }
     };
 
-
     if (isPending) {
         return (
-            <div className="flex items-center gap-3">
-                <div className="h-10 w-20 animate-pulse rounded-lg bg-gray-100" />
-                <div className="h-10 w-24 animate-pulse rounded-lg bg-gray-100" />
+            <div
+                className="flex items-center gap-2 sm:gap-3"
+                aria-label="Authentication loading"
+            >
+                <div className="h-9 w-16 animate-pulse rounded-lg bg-gray-100 sm:h-10 sm:w-20" />
+                <div className="h-9 w-20 animate-pulse rounded-lg bg-gray-100 sm:h-10 sm:w-24" />
             </div>
         );
     }
 
     if (session) {
         const user = session.user;
-        const firstLetter = user.name?.trim().charAt(0).toUpperCase() || "U";
+        const firstLetter =
+            user.name?.trim().charAt(0).toUpperCase() || "U";
 
         return (
-            <div className="relative" ref={dropdownRef}>
+            <div className="relative min-w-0" ref={dropdownRef}>
                 {/* User Profile Button */}
                 <button
                     type="button"
                     onClick={() => setIsOpen((prev) => !prev)}
                     aria-expanded={isOpen}
                     aria-haspopup="true"
-                    className="flex items-center gap-2 rounded-xl px-2 py-2 transition hover:bg-green-50"
+                    aria-label="User menu"
+                    className="flex max-w-full min-w-0 items-center gap-1 rounded-xl px-1.5 py-2 transition hover:bg-green-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 sm:gap-2 sm:px-2"
                 >
                     {/* Avatar */}
-                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 text-lg font-bold text-green-700">
+                    <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-green-100 text-sm font-bold text-green-700 sm:size-10 sm:text-lg">
                         {firstLetter}
                     </span>
 
                     {/* User Name */}
-                    <span className="max-w-36 truncate font-medium text-gray-800">
-                        {user.name}
+                    <span className="max-w-16 truncate text-sm font-medium text-gray-800 sm:max-w-36 sm:text-base">
+                        {user.name || "User"}
                     </span>
 
-                    {/* Down Arrow */}
-                    <svg
-                        className={`h-4 w-4 text-gray-500 transition-transform ${isOpen ? "rotate-180" : ""
-                            }`}
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
+                    <ChevronDown
+                        size={16}
                         aria-hidden="true"
-                    >
-                        <path
-                            fillRule="evenodd"
-                            d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.09 1.03l-4.25 4.5a.75.75 0 01-1.09 0l-4.25-4.5a.75.75 0 01.02-1.05z"
-                            clipRule="evenodd"
-                        />
-                    </svg>
+                        className={`shrink-0 text-gray-500 transition-transform ${isOpen ? "rotate-180" : ""
+                            }`}
+                    />
                 </button>
 
                 {/* Dropdown */}
                 {isOpen && (
-                    <div className="absolute right-0 top-full z-50 mt-3 w-72 overflow-hidden rounded-xl border border-gray-100 bg-white shadow-xl">
+                    <div className="absolute right-0 top-full z-50 mt-2 w-[min(18rem,calc(100vw-1rem))] overflow-hidden rounded-xl border border-gray-100 bg-white shadow-xl sm:mt-3 sm:w-72">
                         {/* User Information */}
-                        <div className="border-b border-gray-100 px-4 py-4">
+                        <div className="border-b border-gray-100 px-3 py-3 sm:px-4 sm:py-4">
                             <p className="truncate font-semibold text-gray-900">
-                                {user.name}
+                                {user.name || "User"}
                             </p>
 
-                            <p className="mt-1 truncate text-sm text-gray-500">
+                            <p className="mt-1 break-all text-sm text-gray-500">
                                 {user.email}
                             </p>
                         </div>
@@ -122,18 +127,23 @@ const AuthButtons = () => {
                             <Link
                                 href="/profile"
                                 onClick={() => setIsOpen(false)}
-                                className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-green-50 hover:text-green-700"
+                                className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-green-50 hover:text-green-700 focus-visible:outline-2 focus-visible:outline-green-600"
                             >
-                                <UserRound size={20} strokeWidth={1.8} />
-                                <span>আপনার প্রোফাইল</span>
+                                <UserRound
+                                    size={20}
+                                    strokeWidth={1.8}
+                                    aria-hidden="true"
+                                />
+                                <span>আমার প্রোফাইল</span>
                             </Link>
 
                             <button
                                 type="button"
                                 onClick={handleSignOut}
-                                className="w-full rounded-lg px-3 py-2.5 text-left text-sm font-semibold text-red-600 transition hover:bg-red-50"
+                                className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm font-semibold text-red-600 transition hover:bg-red-50 focus-visible:outline-2 focus-visible:outline-red-500"
                             >
-                                Sign Out
+                                <LogOut size={19} aria-hidden="true" />
+                                <span>সাইন আউট</span>
                             </button>
                         </div>
                     </div>
@@ -144,17 +154,17 @@ const AuthButtons = () => {
 
     // Logged-out UI
     return (
-        <div className="flex items-center gap-3">
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-3">
             <Link
                 href="/sign-in"
-                className="rounded-lg border border-green-600 px-4 py-2 text-green-700 transition hover:bg-green-50"
+                className="whitespace-nowrap rounded-lg border border-green-600 px-2.5 py-2 text-xs font-medium text-green-700 transition hover:bg-green-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 sm:px-4 sm:text-base"
             >
                 সাইন ইন
             </Link>
 
             <Link
                 href="/sign-up"
-                className="rounded-lg bg-green-600 px-4 py-2 text-white transition hover:bg-green-700"
+                className="whitespace-nowrap rounded-lg bg-green-600 px-2.5 py-2 text-xs font-medium text-white transition hover:bg-green-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 sm:px-4 sm:text-base"
             >
                 সাইন আপ
             </Link>

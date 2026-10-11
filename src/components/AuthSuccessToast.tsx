@@ -11,14 +11,14 @@ export default function AuthSuccessToast() {
     useEffect(() => {
         if (isPending || !session || hasShownToast.current) return;
 
-        const provider = sessionStorage.getItem("social-signup-pending");
+        const provider = sessionStorage.getItem("social-auth-pending");
 
         if (provider) {
-            sessionStorage.removeItem("social-signup-pending");
+            sessionStorage.removeItem("social-auth-pending");
             hasShownToast.current = true;
 
             toast.success(
-                `${provider === "google" ? "Google" : "GitHub"} authentication successful!`
+                `${provider === "google" ? "Google" : "GitHub"} সফলভাবে লগইন হয়েছে`
             );
         }
     }, [session, isPending]);

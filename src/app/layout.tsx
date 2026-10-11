@@ -30,7 +30,7 @@ export default function RootLayout({
         {children}
         <Footer />
         <AuthSuccessToast />
-        <Toaster position="top-right" />
+        <Toaster position="top-center" />
       </body>
     </html>
   );

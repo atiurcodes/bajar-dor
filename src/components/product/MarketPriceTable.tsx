@@ -1,3 +1,4 @@
+
 import { notFound } from "next/navigation";
 import { getProduct } from "@/lib/api";
 import ProductSummary from "@/components/product/ProductSummary";
@@ -26,7 +27,7 @@ const ProductPage = async ({
     }
 
     return (
-        <main className="min-h-screen bg-[#f7faf7]">
+        <main className="min-h-screen bg-[#f7faf7] py-4 sm:py-6 md:py-8">
             <ProductSummary product={product} />
         </main>
     );
