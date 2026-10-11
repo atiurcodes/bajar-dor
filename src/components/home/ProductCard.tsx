@@ -18,9 +18,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
     const isDown = product.change.dir === "down";
 
     const changeClass = isUp
-        ? "bg-red-50 text-red-600"
+        ? "bg-green-50 text-green-600"
         : isDown
-            ? "bg-green-50 text-green-600"
+            ? "bg-red-50 text-red-600"
             : "bg-gray-100 text-gray-600";
 
     const changeIcon = isUp ? "▲" : isDown ? "▼" : "—";

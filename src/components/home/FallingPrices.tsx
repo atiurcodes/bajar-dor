@@ -17,7 +17,7 @@ const FallingPrices = ({ products }: FallingPricesProps) => {
                 <div className="flex items-center gap-2">
                     <span
                         aria-hidden="true"
-                        className="text-2xl text-green-500"
+                        className="text-2xl text-red-500"
                     >
                         ▼
                     </span>
