@@ -269,7 +269,7 @@ export default function SignUpPage() {
 
                 {/* Sign In Link */}
                 <div className="flex items-center justify-center gap-1 mt-5 text-center text-sm leading-6 sm:mt-6">
-                    <p className="text-gray-600">অ্যাকাউন্ট নেই?</p>
+                    <p className="text-gray-600">আগেই অ্যাকাউন্ট আছে?</p>
                     <button className="font-semibold text-green-700 hover:underline focus-visible:outline-2 focus-visible:outline-green-600">
                         <Link href="/sign-in">
                             Sign In করুন

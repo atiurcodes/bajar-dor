@@ -1,25 +1,29 @@
 # বাজার দর (BazarDor)
 
-**BazarDor** is a modern and responsive product browsing web application designed to help users explore products and discover essential shopping information through a clean and user-friendly interface.
+BazarDor is a modern and responsive product browsing web application that helps users explore products, browse categories, and discover useful shopping information through a clean and user-friendly interface.
 
 ## ✨ Key Features
 
-- **Product Browsing:** Explore available products with a clean and organized interface.
-- **Category Navigation:** Browse products through different categories.
+- **Product Browsing:** Explore available products through an organized interface.
+- **Category Navigation:** Browse products by category.
 - **Product Details:** View detailed information about individual products.
+- **Price Comparison:** Explore minimum, maximum, and average prices, along with market-specific prices.
+- **Product Sorting:** Sort products based on available sorting options.
 - **Secure Authentication:** Sign up and sign in using email and password, Google, or GitHub.
-- **Responsive Design:** Enjoy a user-friendly experience across mobile, tablet, and desktop devices.
+- **Protected Routes:** Access authorized pages based on authentication status.
+- **Profile Management:** Update your profile information.
+- **Responsive Design:** Enjoy a user-friendly experience on mobile, tablet, and desktop devices.
 
 ## 🛠️ Technologies Used
 
-- **Next.js** — React framework for building web applications.
-- **React** — Component-based user interface development.
-- **TypeScript** — Type-safe JavaScript development.
-- **Tailwind CSS** — Utility-first styling.
-- **DaisyUI** — Prebuilt UI components.
-- **Better Auth** — Authentication and session management.
-- **MongoDB** — Database integration for authentication data.
-- **Vercel** — Deployment and hosting.
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- DaisyUI
+- Better Auth
+- MongoDB
+- Vercel
 
 ## 🚀 Live Demo
 
@@ -31,7 +35,8 @@
 
 - Node.js
 - npm
-- Required environment variables for authentication and database connectivity
+- MongoDB connection details
+- Required authentication provider credentials and environment variables
 
 ### Installation
 
@@ -53,7 +58,7 @@
    npm install
    ```
 
-4. Configure your environment variables in a `.env.local` file using the variable names required by the project.
+4. Create a `.env.local` file in the project root and configure the environment variables required by the application. Refer to your project's configuration for the exact variable names.
 
 5. Start the development server:
 
