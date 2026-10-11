@@ -20,7 +20,7 @@ const Navbar = () => {
                         </div>
                         <div className='min-w-0'>
                             <h2 className='text-lg sm:text-xl font-semibold whitespace-nowrap'>বাজার দর</h2>
-                            {banglaDate}
+                            <span className='hidden md:block'>{banglaDate}</span>
                         </div>
                     </div>
                 </Link>

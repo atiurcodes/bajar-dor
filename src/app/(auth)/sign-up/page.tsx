@@ -1,6 +1,7 @@
 "use client";
 
 import { signIn, signUp } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 import {
     InputGroup,
     FieldError,
@@ -16,7 +17,7 @@ import toast from "react-hot-toast";
 
 export default function SignUpPage() {
     const [isVisible, setIsVisible] = useState(false);
-
+    const router = useRouter();
     const handleOnSubmit = async (
         e: React.FormEvent<HTMLFormElement>
     ) => {
@@ -39,8 +40,9 @@ export default function SignUpPage() {
                 toast.error(error.message || "Sign up failed!");
                 return;
             }
-
             toast.success("Account created successfully!");
+            router.push("/");
+            router.refresh();
         } catch {
             toast.error("Something went wrong. Please try again.");
         }

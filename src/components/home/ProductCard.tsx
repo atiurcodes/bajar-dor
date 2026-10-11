@@ -33,6 +33,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             {/* Product information */}
             <div className="flex min-w-0 items-start justify-between gap-2">
                 <div className="flex min-w-0 items-center gap-3">
+
                     <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-gray-100 sm:size-14 sm:rounded-2xl">
                         {product.image ? (
                             <span
@@ -42,7 +43,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
                                 {product.image}
                             </span>
                         ) : (
-                            <p>nai</p>
+                            <span className="text-2xl sm:text-3xl" aria-hidden="true">
+                                🛍️
+                            </span>
                         )}
                     </div>
 
