@@ -16,8 +16,8 @@ const CategoryNavClient = ({
 
     const getLinkClass = (isActive: boolean) =>
         `inline-flex shrink-0 items-center whitespace-nowrap rounded-lg px-3 py-2.5 text-sm transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 sm:px-4 ${isActive
-            ? "bg-green-600 font-semibold text-white"
-            : "font-medium text-gray-600 hover:bg-green-50 hover:text-green-700"
+            ? "bg-green-700 font-semibold text-white"
+            : "font-medium text-gray-600 hover:bg-green-100 hover:text-green-700"
         }`;
 
     return (
@@ -25,8 +25,8 @@ const CategoryNavClient = ({
             aria-label="পণ্যের ক্যাটাগরি"
             className="w-full min-w-0"
         >
-            <div className="container mx-auto min-w-0 px-2 sm:px-4">
-                <div className="flex min-w-0 items-center gap-1.5 overflow-x-auto overscroll-x-contain py-2 sm:gap-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="container mx-auto min-w-0 px-4">
+                <div className="flex min-w-0 items-center gap-1.5 overflow-x-auto overscroll-x-contain sm:gap-2">
                     {/* All Products */}
                     <Link
                         href="/"

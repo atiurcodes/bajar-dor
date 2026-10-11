@@ -5,16 +5,22 @@ import Image from "next/image";
 import bannerImg from "@/assets/bazar-hero.png";
 
 const Hero = () => {
+    const banglaDate = new Date().toLocaleDateString("bn-BD", {
+        dateStyle: "full",
+    });
     return (
         <section className="container mx-auto rounded-2xl bg-white px-3 sm:px-4">
             <div className="my-2 flex flex-col justify-between gap-3 p-2 sm:my-4 sm:gap-5 sm:p-4 md:my-6 md:flex-row md:items-center 
                 md:gap-8 md:p-6">
                 <div className="space-y-2 sm:space-y-4 md:flex-1 md:space-y-6">
-                    {/* <BanglaDate /> */}
-
-                    <h2 className="text-2xl font-semibold leading-snug text-black sm:text-4xl md:text-5xl">
-                        আজকের বাজারের দাম এক নজরে
-                    </h2>
+                    <div>
+                        <div className="bg-green-100 px-3 py-1 rounded-full w-fit">
+                            <span className="text-green-500">{banglaDate}</span>
+                        </div>
+                        <h2 className="text-2xl font-semibold leading-snug text-black sm:text-4xl md:text-5xl">
+                            আজকের বাজারের দাম এক নজরে
+                        </h2>
+                    </div>
 
                     <p className="max-w-xl text-sm leading-6 sm:text-base sm:leading-7">
                         চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম ও মসলার দাম — বাজারভিত্তিক বিস্তারিত, গড়,

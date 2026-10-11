@@ -143,7 +143,7 @@ const AuthButtons = () => {
                                 className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm font-semibold text-red-600 transition hover:bg-red-50 focus-visible:outline-2 focus-visible:outline-red-500"
                             >
                                 <LogOut size={19} aria-hidden="true" />
-                                <span>সাইন আউট</span>
+                                <p>সাইন আউট</p>
                             </button>
                         </div>
                     </div>

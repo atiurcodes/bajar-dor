@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Product } from "@/types/product";
+import { ShoppingBasket } from "@gravity-ui/icons";
 
 interface ProductCardProps {
     product: Product;
@@ -33,9 +34,16 @@ const ProductCard = ({ product }: ProductCardProps) => {
             <div className="flex min-w-0 items-start justify-between gap-2">
                 <div className="flex min-w-0 items-center gap-3">
                     <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-gray-100 sm:size-14 sm:rounded-2xl">
-                        <span className="text-2xl sm:text-3xl" aria-hidden="true">
-                            {product.image}
-                        </span>
+                        {product.image ? (
+                            <span
+                                className="text-2xl sm:text-3xl"
+                                aria-hidden="true"
+                            >
+                                {product.image}
+                            </span>
+                        ) : (
+                            <p>nai</p>
+                        )}
                     </div>
 
                     <div className="min-w-0">

@@ -159,7 +159,7 @@ const ProfileForm = ({ user }: { user: ProfileUser }) => {
                     {isUpdating && (
                         <LoaderCircle className="size-4 animate-spin" />
                     )}
-                    {isUpdating ? "আপডেট হচ্ছে..." : "Update Name"}
+                    {isUpdating ? "পরিবর্তন হচ্ছে..." : "পরিবর্তন করুন"}
                 </button>
             </form>
         </section>
@@ -299,7 +299,7 @@ const ProfilePage = () => {
 
                             {isSigningOut
                                 ? "সাইন আউট হচ্ছে..."
-                                : "Sign Out"}
+                                : "সাইন আউট"}
                         </button>
                     </div>
 
